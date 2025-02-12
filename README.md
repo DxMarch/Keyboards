@@ -1,10 +1,10 @@
 Simple C++ program to remap Norwegian QWERTY to my custom nordic colemak layout.
 
-Adds a capslock layer (CAPS + ):
-- D = {
-- F = }
-- E = [
-- R = ]
+Adds a capslock layer, `CAPS + <key>`:
+- D -> {
+- F -> }
+- E -> [
+- R -> ]
 
 g++ command for compiling with optimization and as a GUI application
 ```bash
