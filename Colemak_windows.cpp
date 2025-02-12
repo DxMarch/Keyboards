@@ -29,14 +29,24 @@ std::unordered_map<WPARAM, WPARAM> keyMap = {
     {'N', 'K'},
 };
 
+/*  WPARAM:
+    WM_SYSKEYDOWN = 260 (alt)
+*/
+
 // Flag to indicate if a key event is being simulated
 bool isSimulatingKeyEvent = false;
-// Flag to indicate if a modifier key is being held down
-bool modifierDown = false;
+// Bitmask to track modifier keys being pressed down
+unsigned int modifierState = 0;
 // Flag for caps lock state
 bool capsLock = false;
 // Custom key remapping
 bool remapKeys = true;
+
+enum ModifierKeys {
+    CTRL = 1,
+    ALT = 2,  
+    WIN = 4    
+};
 
 void capsLockShorcuts(WPARAM key) {
     switch (key) {
@@ -82,9 +92,9 @@ LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
         KBDLLHOOKSTRUCT* p = (KBDLLHOOKSTRUCT*)lParam;
         // Check if a key is being pressed down 
         // and no modifier active and real key press
-        if ((wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN) && !modifierDown && !isSimulatingKeyEvent) {
+        if ((wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN) && !isSimulatingKeyEvent) {
             WPARAM key = p->vkCode;
-            std::cout << key << std::endl;
+            // std::cout << key << std::endl;
             // Handle caps lock shortcuts
             if (capsLock) {
                 isSimulatingKeyEvent = true;
@@ -98,11 +108,15 @@ LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
                 return 1; // Block original key
             }
             // Check if a modifier key is being pressed down
-            if (key == VK_LCONTROL || key == VK_RCONTROL || wParam == WM_SYSKEYDOWN) {
-                modifierDown = true;
+            if (key == VK_LCONTROL || key == VK_RCONTROL) {
+                modifierState |= ModifierKeys::CTRL;
+            } else if (key == VK_LMENU || key == VK_RMENU) {
+                modifierState |= ModifierKeys::ALT;
+            } else if (key == VK_LWIN || key == VK_RWIN) {
+                modifierState |= ModifierKeys::WIN;
             }
             // Check if key is a key we want to remap
-            else if (keyMap.find(key) != keyMap.end() && remapKeys) {
+            else if (keyMap.find(key) != keyMap.end() && remapKeys  && modifierState == 0 ) {
                 isSimulatingKeyEvent = true;
                 keybd_event(keyMap[key], 0, 0, 0); 
                 isSimulatingKeyEvent = false;
@@ -119,8 +133,13 @@ LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
         // Check if a modifier key is being released
         else if (wParam == WM_KEYUP || wParam == WM_SYSKEYUP) {
             WPARAM key = p->vkCode;
-            if (key == VK_LCONTROL || key == VK_RCONTROL || wParam == WM_SYSKEYUP) {
-                modifierDown = false;
+            
+            if (key == VK_LCONTROL || key == VK_RCONTROL) {
+                modifierState &= ~ModifierKeys::CTRL;
+            } else if (key == VK_LMENU || key == VK_RMENU) {
+                modifierState &= ~ModifierKeys::ALT;
+            } else if (key == VK_LWIN || key == VK_RWIN) {
+                modifierState &= ~ModifierKeys::WIN;
             } else if (key == VK_CAPITAL) {
                 capsLock = false;
             }
@@ -141,6 +160,3 @@ int main() {
     UnhookWindowsHookEx(hhkLowLevelKybd);
     return 0;
 }
-
-// WPARAM:
-// WM_SYSKEYDOWN = 260 (alt)
