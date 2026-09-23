@@ -3,6 +3,7 @@
     "manipulators": [
         {
             "type": "basic",
+            "description": "Hold Caps Lock to activate Caps Layer",
             "from": {
                 "key_code": "caps_lock",
                 "modifiers": {
@@ -64,6 +65,29 @@
                 }
             ],
             "from": {
+                "key_code": "a",
+                "modifiers": {
+                    "optional": [
+                        "any"
+                    ]
+                }
+            },
+            "to": [
+                {
+                    "key_code": "grave_accent_and_tilde"
+                }
+            ]
+        },
+        {
+            "type": "basic",
+            "conditions": [
+                {
+                    "type": "variable_if",
+                    "name": "caps_layer",
+                    "value": 1
+                }
+            ],
+            "from": {
                 "key_code": "w",
                 "modifiers": {
                     "optional": [
@@ -77,6 +101,29 @@
                     "modifiers": [
                         "left_shift"
                     ]
+                }
+            ]
+        },
+        {
+            "type": "basic",
+            "conditions": [
+                {
+                    "type": "variable_if",
+                    "name": "caps_layer",
+                    "value": 1
+                }
+            ],
+            "from": {
+                "key_code": "g",
+                "modifiers": {
+                    "optional": [
+                        "any"
+                    ]
+                }
+            },
+            "to": [
+                {
+                    "key_code": "equal_sign"
                 }
             ]
         },
@@ -246,77 +293,6 @@
                 }
             ],
             "from": {
-                "key_code": "o",
-                "modifiers": {
-                    "optional": [
-                        "any"
-                    ]
-                }
-            },
-            "to": [
-                {
-                    "key_code": "grave_accent_and_tilde"
-                }
-            ]
-        },
-        {
-            "type": "basic",
-            "conditions": [
-                {
-                    "type": "variable_if",
-                    "name": "caps_layer",
-                    "value": 1
-                }
-            ],
-            "from": {
-                "key_code": "p",
-                "modifiers": {
-                    "mandatory": [
-                        "shift"
-                    ]
-                }
-            },
-            "to": [
-                {
-                    "key_code": "o",
-                    "modifiers": [
-                        "left_option",
-                        "left_shift"
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "basic",
-            "conditions": [
-                {
-                    "type": "variable_if",
-                    "name": "caps_layer",
-                    "value": 1
-                }
-            ],
-            "from": {
-                "key_code": "p"
-            },
-            "to": [
-                {
-                    "key_code": "o",
-                    "modifiers": [
-                        "left_option"
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "basic",
-            "conditions": [
-                {
-                    "type": "variable_if",
-                    "name": "caps_layer",
-                    "value": 1
-                }
-            ],
-            "from": {
                 "key_code": "d",
                 "modifiers": {
                     "optional": [
@@ -356,29 +332,6 @@
                     "modifiers": [
                         "left_shift"
                     ]
-                }
-            ]
-        },
-        {
-            "type": "basic",
-            "conditions": [
-                {
-                    "type": "variable_if",
-                    "name": "caps_layer",
-                    "value": 1
-                }
-            ],
-            "from": {
-                "key_code": "g",
-                "modifiers": {
-                    "optional": [
-                        "any"
-                    ]
-                }
-            },
-            "to": [
-                {
-                    "key_code": "equal_sign"
                 }
             ]
         },
@@ -490,6 +443,32 @@
                 }
             ],
             "from": {
+                "key_code": "semicolon",
+                "modifiers": {
+                    "optional": [
+                        "any"
+                    ]
+                }
+            },
+            "to": [
+                {
+                    "key_code": "o",
+                    "modifiers": [
+                        "left_option"
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "basic",
+            "conditions": [
+                {
+                    "type": "variable_if",
+                    "name": "caps_layer",
+                    "value": 1
+                }
+            ],
+            "from": {
                 "key_code": "c",
                 "modifiers": {
                     "optional": [
@@ -536,20 +515,16 @@
                 }
             ],
             "from": {
-                "key_code": "open_bracket",
+                "key_code": "n",
                 "modifiers": {
-                    "mandatory": [
-                        "shift"
+                    "optional": [
+                        "any"
                     ]
                 }
             },
             "to": [
                 {
-                    "key_code": "quote",
-                    "modifiers": [
-                        "left_option",
-                        "left_shift"
-                    ]
+                    "key_code": "grave_accent_and_tilde"
                 }
             ]
         },
@@ -563,14 +538,16 @@
                 }
             ],
             "from": {
-                "key_code": "open_bracket"
+                "key_code": "period",
+                "modifiers": {
+                    "optional": [
+                        "any"
+                    ]
+                }
             },
             "to": [
                 {
-                    "key_code": "quote",
-                    "modifiers": [
-                        "left_option"
-                    ]
+                    "key_code": "equal_sign"
                 }
             ]
         },
@@ -586,32 +563,10 @@
             "from": {
                 "key_code": "slash",
                 "modifiers": {
-                    "mandatory": [
-                        "shift"
+                    "optional": [
+                        "any"
                     ]
                 }
-            },
-            "to": [
-                {
-                    "key_code": "quote",
-                    "modifiers": [
-                        "left_option",
-                        "left_shift"
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "basic",
-            "conditions": [
-                {
-                    "type": "variable_if",
-                    "name": "caps_layer",
-                    "value": 1
-                }
-            ],
-            "from": {
-                "key_code": "slash"
             },
             "to": [
                 {
@@ -634,32 +589,10 @@
             "from": {
                 "key_code": "quote",
                 "modifiers": {
-                    "mandatory": [
-                        "shift"
+                    "optional": [
+                        "any"
                     ]
                 }
-            },
-            "to": [
-                {
-                    "key_code": "a",
-                    "modifiers": [
-                        "left_option",
-                        "left_shift"
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "basic",
-            "conditions": [
-                {
-                    "type": "variable_if",
-                    "name": "caps_layer",
-                    "value": 1
-                }
-            ],
-            "from": {
-                "key_code": "quote"
             },
             "to": [
                 {
